@@ -9,26 +9,75 @@ function Customize2() {
     const [loading,setLoading]=useState(false)
     const navigate=useNavigate()
 
-const handleUpdateAssistant = async () => {
+
+
+    const handleUpdateAssistant = async () => {
   setLoading(true);
   try {
     const formData = new FormData();
     formData.append("assistantName", assistantName);
 
     if (backendImage) {
-      formData.append("assistantImage", backendImage); 
+      formData.append("assistantImage", backendImage);
     } else if (selectedImage) {
-      formData.append("imageUrl", selectedImage); 
+      formData.append("imageUrl", selectedImage);
     }
 
+    // ✅ Get JWT token from localStorage (it should be saved when user logs in)
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("No token found. Please log in again.");
+      setLoading(false);
+      navigate("/signin"); // optional: redirect to login
+      return;
+    }
+
+    // ✅ Send token in the Authorization header
     const result = await axios.post(
       `${serverUrl}/api/user/update`,
       formData,
       {
-        withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${token}`,
+        },
       }
     );
+
+    console.log("Update success:", result.data);
+    setUserData(result.data);
+    navigate("/");
+  } catch (error) {
+    console.error("Update failed:", error.response?.data || error.message);
+    alert("Update failed: " + (error.response?.data?.message || error.message));
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+    
+
+// const handleUpdateAssistant = async () => {
+//   setLoading(true);
+//   try {
+//     const formData = new FormData();
+//     formData.append("assistantName", assistantName);
+
+//     if (backendImage) {
+//       formData.append("assistantImage", backendImage); 
+//     } else if (selectedImage) {
+//       formData.append("imageUrl", selectedImage); 
+//     }
+
+//     const result = await axios.post(
+//       `${serverUrl}/api/user/update`,
+//       formData,
+//       {
+//         withCredentials: true,
+//         headers: { "Content-Type": "multipart/form-data" },
+//       }
+//     );
 
     setLoading(false);
     console.log(result.data);
