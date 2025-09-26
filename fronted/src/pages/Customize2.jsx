@@ -57,7 +57,7 @@ function Customize2() {
                 value={assistantName}
                 onChange={(e) => setAssistantName(e.target.value)}
                 placeholder="Enter Assistant Name"
-                className="px-4 py-2 rounded-lg text-black mb-4"
+                className="px-4 py-2 rounded-lg text-white bg-gray-800 border border-gray-500 mb-4 placeholder-gray-400"
             />
 
             <button
