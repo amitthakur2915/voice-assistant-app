@@ -79,15 +79,15 @@ function Customize2() {
 //       }
 //     );
 
-    setLoading(false);
-    console.log(result.data);
-    setUserData(result.data);
-    navigate("/");
-  } catch (error) {
-    setLoading(false);
-    console.error("Update failed:", error.response?.data || error.message);
-  }
-};
+//     setLoading(false);
+//     console.log(result.data);
+//     setUserData(result.data);
+//     navigate("/");
+//   } catch (error) {
+//     setLoading(false);
+//     console.error("Update failed:", error.response?.data || error.message);
+//   }
+// };
 
   return (
     <div className='w-full h-[100vh] bg-gradient-to-t from-[black] to-[#030353] flex justify-center items-center 
